@@ -121,7 +121,7 @@ def main():
         logging.info(f'Running with a single process. Device {args.device}.')
 
     random_seed(args.seed, 0)
-    model, preprocess_train, preprocess_val = create_mmodelodel_and_transforms(
+    model, preprocess_train, preprocess_val = create_model_and_transforms(
         args=args,
         precision=args.precision,
         device=device,
@@ -332,3 +332,25 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+"""
+## Single GPU
+python -m training.main \
+--image-dir="/home/shivasankaran/projects/qlip/data/pmc_oa/caption_T060_filtered_top4_sep_v0_subfigures" --dataset-type "jsonl" --csv-separator "," --save-frequency 5 \
+--report-to tensorboard \
+--train-data="/home/shivasankaran/projects/qlip/data/pmc_oa/train.jsonl" --val-data="/home/shivasankaran/projects/qlip/data/pmc_oa/valid.jsonl" \
+--csv-img-key image --csv-caption-key caption \
+--warmup 500 --batch-size=8 --lr=1e-4 --wd=0.1 --epochs=100 --workers=8 \
+--model RN50_fusion4 --hugging-face --mlm --crop-scale 0.5
+
+
+## Multi GPU
+CUDA_VISIBLE_DEVICES=0,1 torchrun --nproc_per_node=2 --rdzv_endpoint=$HOSTE_NODE_ADDR -m training.main \
+--image-dir="/home/shivasankaran/projects/qlip/data/pmc_oa/caption_T060_filtered_top4_sep_v0_subfigures" --dataset-type "jsonl" --csv-separator "," --save-frequency 5 \
+--report-to tensorboard \
+--train-data="/home/shivasankaran/projects/qlip/data/pmc_oa/train.jsonl" --val-data="/home/shivasankaran/projects/qlip/data/pmc_oa/valid.jsonl" \
+--csv-img-key image --csv-caption-key caption \
+--warmup 500 --batch-size=64 --lr=1e-4 --wd=0.1 --epochs=100 --workers=8 \
+--model RN50_fusion4 --hugging-face --mlm --crop-scale 0.5
+"""

@@ -47,7 +47,7 @@ class PMC_CLIP(nn.Module):
         # memory efficient in recent PyTorch releases (>= 1.10).
         # NOTE: timm models always use native GELU regardless of quick_gelu flag.
         act_layer = QuickGELU if quick_gelu else nn.GELU
-
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!! VISUAL BACKBONE: ",vision_cfg.backbone)
         if vision_cfg.timm_model_name:
             self.visual = TimmModel(
                 vision_cfg.timm_model_name,
@@ -62,7 +62,9 @@ class PMC_CLIP(nn.Module):
             VisualBackbone = {
                 "RN50": ResNet,
                 "ModifiedRN50": ModifiedResNet,
+                #"SimpleCNN": SimpleCNN
             }[vision_cfg.backbone]
+
             vision_heads = vision_cfg.width * 32 // vision_cfg.head_width
 
             self.visual = VisualBackbone(

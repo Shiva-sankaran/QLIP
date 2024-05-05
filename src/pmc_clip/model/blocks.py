@@ -277,6 +277,81 @@ class ModifiedResNet(nn.Module):
         })
 
         return visual_output
+########################################################################################################## 
+
+# import torch
+# import torch.nn.functional as F
+# import torch.optim as optim
+# import numpy as np
+
+# import torchquantum as tq
+# import random
+
+# from torchquantum.dataset import MNIST
+# from torch.optim.lr_scheduler import CosineAnnealingLR
+
+# class QuanvolutionFilter(tq.QuantumModule):
+#     def __init__(self):
+#         super().__init__()
+#         self.n_wires = 4
+#         self.q_device = tq.QuantumDevice(n_wires=self.n_wires,bsz=10)
+#         self.encoder = tq.GeneralEncoder(
+#         [   {'input_idx': [0], 'func': 'ry', 'wires': [0]},
+#             {'input_idx': [1], 'func': 'ry', 'wires': [1]},
+#             {'input_idx': [2], 'func': 'ry', 'wires': [2]},
+#             {'input_idx': [3], 'func': 'ry', 'wires': [3]},])
+
+#         self.q_layer = tq.RandomLayer(n_ops=8, wires=list(range(self.n_wires)))
+#         self.measure = tq.MeasureAll(tq.PauliZ)
+
+#     def forward(self, x, use_qiskit=False):
+#         bsz = x.shape[0]
+#         size = 224
+#         x = x.view(bsz, size, size)
+
+#         data_list = []
+
+#         for c in range(0, size, 2):
+#             for r in range(0, size, 2):
+#                 data = torch.transpose(torch.cat((x[:, c, r], x[:, c, r+1], x[:, c+1, r], x[:, c+1, r+1])).view(4, bsz), 0, 1)
+#                 if use_qiskit:
+#                     data = self.qiskit_processor.process_parameterized(
+#                         self.q_device, self.encoder, self.q_layer, self.measure, data)
+#                 else:
+#                     self.encoder(self.q_device, data)
+#                     self.q_layer(self.q_device)
+#                     data = self.measure(self.q_device)
+
+#                 data_list.append(data.view(bsz, 4))
+
+#         result = torch.cat(data_list, dim=1).float()
+
+#         return result
+
+# class SimpleCNN(nn.Module):
+#     """
+#     A ResNet class that is similar to torchvision's but contains the following changes:
+#     - There are now 3 "stem" convolutions as opposed to 1, with an average pool instead of a max pool.
+#     - Performs anti-aliasing strided convolutions, where an avgpool is prepended to convolutions with stride > 1
+#     - The final pooling layer is a QKV attention instead of an average pool
+#     """
+
+#     def __init__(self, layers, output_dim, heads, image_size=224, width=64):
+#         super().__init__()
+#         print("!!!!!!!!!!!!! USING SIMPLE QCNN ENCODER")
+#         self.output_dim = output_dim
+#         self.image_size = image_size
+#         self.qf = QuanvolutionFilter()
+
+        
+
+#     def forward(self, x, use_qiskit=False):
+#         with torch.no_grad():
+#           x = self.qf(x, use_qiskit)
+
+#         return x
+
+########################################################################################################## 
 
 
 class LayerNorm(nn.LayerNorm):

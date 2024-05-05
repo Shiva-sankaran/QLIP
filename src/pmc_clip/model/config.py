@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 @dataclass
 class CLIPVisionCfg:
-    backbone: str = 'ModifiedRN50'  # ['RN50', 'ModifiedRN50', 'MAE']
+    backbone: str = 'ModifiedRN50'  # ['RN50', 'ModifiedRN50', 'MAE', 'SimpleCNN']
     layers: Union[Tuple[int, int, int, int], int] = 12
     width: int = 768
     head_width: int = 64
