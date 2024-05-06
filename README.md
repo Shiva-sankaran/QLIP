@@ -92,9 +92,6 @@ CUDA_VISIBLE_DEVICES=0,1 torchrun --nproc_per_node=2 --rdzv_endpoint=$HOSTE_NODE
 
 
 
-| Model | URL |
-| --- | --- |
-| qlip:beta | https://huggingface.co/datasets/axiong/pmc_oa_beta/blob/main/checkpoint.pt |
 
 
 
