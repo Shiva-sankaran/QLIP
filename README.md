@@ -87,71 +87,14 @@ CUDA_VISIBLE_DEVICES=0,1 torchrun --nproc_per_node=2 --rdzv_endpoint=$HOSTE_NODE
 </div>
 
 
-### 4. Evaluation
-Load checkpoint and eval on 2k samples from testset.
-
-```bash
-python -m training.main \
---dataset-type "csv" --csv-separator "," --report-to tensorboard \
---val-data="path/to/test.csv" \
---csv-img-key image --csv-caption-key caption \
---batch-size=32 --workers=8 \
---model RN50_fusion4 --hugging-face --mlm --crop-scale 0.1 \
---resume /path/to/checkpoint.pt \
---test-2000
-```
-
-Also we provide automatic ways to load model weights from huggingface repo.
 
 | Model | URL |
 | --- | --- |
 | qlip:beta | https://huggingface.co/datasets/axiong/pmc_oa_beta/blob/main/checkpoint.pt |
 
 
-Take qlip:beta checkpoint as an example:
-```bash
-python -m training.main \
---dataset-type "csv" --csv-separator "," --report-to tensorboard \
---val-data="path/to/test.csv" \
---csv-img-key image --csv-caption-key caption \
---batch-size=32 --workers=8 \
---model RN50_fusion4 --hugging-face --mlm --crop-scale 0.1 \
---resume "qlip:beta" \
---test-2000
-```
 
 
-## Acknowledgement
-The code is based on [OpenCLIP](https://github.com/mlfoundations/open_clip) and [M3AE](https://github.com/zhjohnchan/M3AE). We thank the authors for their open-sourced code and encourage users to cite their works when applicable.
-
-Note that our code don't supported tools like horovod, wandb in OpenCLIP. But we keep the code from OpenCLIP for consistency.
-
-## Contribution
-Please raise an issue if you need help, any contributions are welcomed.
-
-## TODO
-
-* [ ] Compatibility testing on more env settings
-* [ ] Support for horovod, wandb
 
 
-## Cite
-```bash
-@article{lin2023pmc,
-  title={QLIP: Contrastive Language-Image Pre-training using Biomedical Documents},
-  author={Lin, Weixiong and Zhao, Ziheng and Zhang, Xiaoman and Wu, Chaoyi and Zhang, Ya and Wang, Yanfeng and Xie, Weidi},
-  journal={arXiv preprint arXiv:2303.07240},
-  year={2023}
-}
-```
-
-The paper has been accepted by MICCAI 2023.
-```bash
-@inproceedings{lin2023pmc,
-  title={QLIP: Contrastive language-image pre-training using biomedical documents},
-  author={Lin, Weixiong and Zhao, Ziheng and Zhang, Xiaoman and Wu, Chaoyi and Zhang, Ya and Wang, Yanfeng and Xie, Weidi},
-  booktitle={MICCAI},
-  year={2023}
-}
-```
 
