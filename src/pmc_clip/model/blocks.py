@@ -277,6 +277,77 @@ class ModifiedResNet(nn.Module):
         })
 
         return visual_output
+import pennylane as qml
+import torch
+import torch.nn.functional as F
+from torch.utils.data import DataLoader
+from torch import nn
+from torchvision import datasets, transforms
+
+# Adjusted number of qubits
+num_wires = 4
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+dev = qml.device("lightning.qubit", wires=num_wires)
+
+# Define the quantum layer
+@qml.qnode(dev, interface='torch')
+def quantum_layer(inputs, weights):
+    qml.templates.AngleEmbedding(inputs, wires=range(num_wires))
+    qml.templates.StronglyEntanglingLayers(weights, wires=range(num_wires))
+    return [qml.expval(qml.PauliZ(i)) for i in range(num_wires)]
+
+# Quantum ResNet model
+class QuantumResNet(nn.Module):
+    def __init__(self,layers, output_dim, heads, image_size=224, width=64, num_qubits=4, num_layers=2):
+        super().__init__()
+        self.output_dim = output_dim
+        self.image_size = image_size
+        self.num_qubits = num_qubits
+        self.num_layers = num_layers
+        self.conv1 = nn.Conv2d(3, 8, kernel_size=3, stride=1, padding=1)
+        self.conv2 = nn.Conv2d(8, 16, kernel_size=3, stride=1, padding=1)
+        self.fc = nn.Linear(16 * 7 * 7, num_qubits)  # Compress features to match qubit count
+
+        # Initialize quantum circuit weights
+        weight_shapes = (num_layers, num_qubits, 3)
+        self.weights = nn.Parameter(torch.randn(weight_shapes).float())
+
+        self.fc_out = nn.Linear(num_qubits, 768)  # Final linear layer for classification
+        self.to(device)
+
+    def forward(self, inputs):
+        batch_size = inputs.shape[0]
+        # Apply convolutional layers
+        inputs = self.conv1(inputs)
+        inputs = F.relu(inputs)
+        inputs = F.max_pool2d(inputs, 2)
+
+        inputs = self.conv2(inputs)
+        inputs = F.relu(inputs)
+        inputs = F.max_pool2d(inputs, 2)
+
+        # Flatten and compress features to fit quantum circuit input
+        inputs = inputs.view(-1, 16 * 7 * 7)
+        inputs = self.fc(inputs).float().to(device)
+        
+
+        # Ensure the inputs and weights are on the correct device
+        q_output_list = []
+        for i in range(batch_size):
+            single_input = inputs[i]
+            q_output = torch.tensor(quantum_layer(single_input.cpu(), self.weights.cpu()), dtype=torch.float32).to(device)
+            q_output_list.append(q_output)
+
+        q_output_tensor = torch.stack(q_output_list).to(device)
+        visual_output = dict.fromkeys(["image_features", "mim_loss"], None)
+        visual_output.update({
+            'image_features': self.fc_out(q_output_tensor),
+        })
+
+        return visual_output
+
+       # return self.fc_out(q_output_tensor)
+
 ########################################################################################################## 
 
 # import torch
@@ -461,5 +532,4 @@ class Transformer(nn.Module):
             else:
                 x = r(x, attn_mask=attn_mask)
         return x
-
 

@@ -21,7 +21,7 @@ from transformers import AutoTokenizer, AutoModel
 
 from .config import CLIPVisionCfg, CLIPTextCfg
 from .blocks import Bottleneck, AttentionPool2d, ResNet, ModifiedResNet, LayerNorm, QuickGELU, ResidualAttentionBlock,\
-                    Transformer
+                    Transformer, QuantumResNet
 
 
 class PMC_CLIP(nn.Module):
@@ -61,7 +61,7 @@ class PMC_CLIP(nn.Module):
         elif isinstance(vision_cfg.layers, (tuple, list)):
             VisualBackbone = {
                 "RN50": ResNet,
-                "ModifiedRN50": ModifiedResNet,
+                "ModifiedRN50":QuantumResNet, #ModifiedResNet,
                 #"SimpleCNN": SimpleCNN
             }[vision_cfg.backbone]
 
@@ -199,6 +199,7 @@ class PMC_CLIP(nn.Module):
             raise RuntimeError('Missing Image OR Text in the input')
 
         image_features = self.encode_image(image)
+        #print("image feat dim: ",image_features.shape)
         image_features = F.normalize(image_features['image_features'], dim=-1)  # [128, 768]
 
         text_output = self.encode_text(batch, image_features)
