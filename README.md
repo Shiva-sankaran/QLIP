@@ -2,7 +2,9 @@
 
 This repository has been cloned from [PMC-CLIP](https://github.com/WeixiongLin/PMC-CLIP)
 
-We concatenated Quantum ResNet-based CNN as a visual encoder via Pennylane and Torch with 4 qubits. The combined model trains contrastively on image-text pairs. Due to resource restrictions, this work stands only as a POC, and we were able to train for only 10 epochs, with each epoch taking around 4 hours on the Tesla T4 GPU. The final retrieval results will be reported in the report.
+We concatenated Quantum ResNet-based CNN as a visual encoder via Pennylane and Torch with 4 qubits. The combined model trains contrastively on image-text pairs. Due to resource restrictions, this work stands only as a POC, and we were able to train for only 10 epochs, with each epoch taking around 4 hours on the Tesla T4 GPU. The final retrieval results will be reported in the report. 
+
+The added Quantum model can be viewed [here](https://github.com/Shiva-sankaran/QLIP/blob/main/src/pmc_clip/model/blocks.py#L300)
 
 The dataset and checkpoint is available at [Huggingface](https://huggingface.co/datasets/axiong/pmc-oa), [Baidu Cloud](https://pan.baidu.com/s/1mD51oOYbIOqDJSeiPNaCCg)(key: 3iqf).
 
