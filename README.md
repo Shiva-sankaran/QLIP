@@ -22,7 +22,7 @@ Repo Structure
 ```bash
 src/:
     |--setup.py
-    |--pmc_clip/
+    |--qlip/
     |   |--loss/
     |   |--model/: QLIP model and variants
     |   |--model_configs/
@@ -41,13 +41,13 @@ docs/: project pages
 ### 1. Create Environment
 
 ```bash
-conda create -n pmc_clip python=3.8
-conda activate pmc_clip
+conda create -n qlip python=3.9
+conda activate qlip
 
 pip install -r requirements.txt
 # pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
-python setup.py develop  # install pmc_clip with dev mode
+python setup.py develop  # install qlip with dev mode
 ```
 
 ### 2. Prepare Dataset
@@ -105,10 +105,10 @@ Also we provide automatic ways to load model weights from huggingface repo.
 
 | Model | URL |
 | --- | --- |
-| PMC_CLIP:beta | https://huggingface.co/datasets/axiong/pmc_oa_beta/blob/main/checkpoint.pt |
+| qlip:beta | https://huggingface.co/datasets/axiong/pmc_oa_beta/blob/main/checkpoint.pt |
 
 
-Take PMC_CLIP:beta checkpoint as an example:
+Take qlip:beta checkpoint as an example:
 ```bash
 python -m training.main \
 --dataset-type "csv" --csv-separator "," --report-to tensorboard \
@@ -116,7 +116,7 @@ python -m training.main \
 --csv-img-key image --csv-caption-key caption \
 --batch-size=32 --workers=8 \
 --model RN50_fusion4 --hugging-face --mlm --crop-scale 0.1 \
---resume "PMC_CLIP:beta" \
+--resume "qlip:beta" \
 --test-2000
 ```
 
