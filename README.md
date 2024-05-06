@@ -5,7 +5,7 @@ This repository has been cloned from [PMC-CLIP](https://github.com/WeixiongLin/P
 The dataset and checkpoint is available at [Huggingface](https://huggingface.co/datasets/axiong/pmc-oa), [Baidu Cloud](https://pan.baidu.com/s/1mD51oOYbIOqDJSeiPNaCCg)(key: 3iqf).
 
 
-- [PMC-CLIP](#pmc-clip)
+- [QLIP](#QLIP)
   - [Usage](#usage)
     - [1. Create Environment](#1-create-environment)
     - [2. Prepare Dataset](#2-prepare-dataset)
@@ -24,7 +24,7 @@ src/:
     |--setup.py
     |--pmc_clip/
     |   |--loss/
-    |   |--model/: PMC-CLIP model and variants
+    |   |--model/: QLIP model and variants
     |   |--model_configs/
     |   |--factory.py: Create model according to configs
     |   |--transform.py: data augmentation
@@ -138,7 +138,7 @@ Please raise an issue if you need help, any contributions are welcomed.
 ## Cite
 ```bash
 @article{lin2023pmc,
-  title={PMC-CLIP: Contrastive Language-Image Pre-training using Biomedical Documents},
+  title={QLIP: Contrastive Language-Image Pre-training using Biomedical Documents},
   author={Lin, Weixiong and Zhao, Ziheng and Zhang, Xiaoman and Wu, Chaoyi and Zhang, Ya and Wang, Yanfeng and Xie, Weidi},
   journal={arXiv preprint arXiv:2303.07240},
   year={2023}
@@ -148,7 +148,7 @@ Please raise an issue if you need help, any contributions are welcomed.
 The paper has been accepted by MICCAI 2023.
 ```bash
 @inproceedings{lin2023pmc,
-  title={Pmc-clip: Contrastive language-image pre-training using biomedical documents},
+  title={QLIP: Contrastive language-image pre-training using biomedical documents},
   author={Lin, Weixiong and Zhao, Ziheng and Zhang, Xiaoman and Wu, Chaoyi and Zhang, Ya and Wang, Yanfeng and Xie, Weidi},
   booktitle={MICCAI},
   year={2023}
