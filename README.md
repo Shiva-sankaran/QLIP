@@ -81,9 +81,9 @@ CUDA_VISIBLE_DEVICES=0,1 torchrun --nproc_per_node=2 --rdzv_endpoint=$HOSTE_NODE
 ```
 
 <div class="third">
-  <img src="docs/resources/train_loss.png" style="height:200px">
-  <img src="docs/resources/val_i2t@1.png" style="height:200px">
-  <img src="docs/resources/val_t2i@1.png" style="height:200px">
+  <img src="docs/resources/match_loss.jpeg" style="height:200px">
+  <img src="docs/resources/mlm_loss.jpeg" style="height:200px">
+  <img src="docs/resources/total_loss.jpeg" style="height:200px">
 </div>
 
 
