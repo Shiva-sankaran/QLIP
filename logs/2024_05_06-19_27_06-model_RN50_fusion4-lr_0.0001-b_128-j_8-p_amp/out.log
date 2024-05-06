@@ -1,0 +1,251 @@
+2024-05-06,19:27:06 | INFO | Running with a single process. Device cuda:0.
+2024-05-06,19:27:06 | INFO | Loading RN50_fusion4 model config.
+2024-05-06,19:27:06 | INFO | RN50_fusion4 Loaded.
+2024-05-06,19:27:10 | INFO | Model:
+2024-05-06,19:27:10 | INFO | PMC_CLIP(
+  (visual): QuantumResNet(
+    (conv1): Conv2d(3, 8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (conv2): Conv2d(8, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (fc): Linear(in_features=784, out_features=4, bias=True)
+    (fc_out): Linear(in_features=4, out_features=768, bias=True)
+  )
+  (text_encoder): BertModel(
+    (embeddings): BertEmbeddings(
+      (word_embeddings): Embedding(30522, 768, padding_idx=0)
+      (position_embeddings): Embedding(512, 768)
+      (token_type_embeddings): Embedding(2, 768)
+      (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+      (dropout): Dropout(p=0.1, inplace=False)
+    )
+    (encoder): BertEncoder(
+      (layer): ModuleList(
+        (0-11): 12 x BertLayer(
+          (attention): BertAttention(
+            (self): BertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): BertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): BertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+      )
+    )
+    (pooler): BertPooler(
+      (dense): Linear(in_features=768, out_features=768, bias=True)
+      (activation): Tanh()
+    )
+  )
+  (ln_final): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+  (softmax): LogSoftmax(dim=-1)
+  (fusion_module): Transformer(
+    (resblocks): ModuleList(
+      (0-3): 4 x ResidualAttentionBlock(
+        (attn): MultiheadAttention(
+          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+        )
+        (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+        (mlp): Sequential(
+          (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+          (gelu): GELU(approximate='none')
+          (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+        )
+        (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+  )
+)
+2024-05-06,19:27:10 | INFO | Params:
+2024-05-06,19:27:10 | INFO |   batch_size: 128
+2024-05-06,19:27:10 | INFO |   bert_model_name: microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext
+2024-05-06,19:27:10 | INFO |   beta1: 0.9
+2024-05-06,19:27:10 | INFO |   beta2: 0.999
+2024-05-06,19:27:10 | INFO |   checkpoint_path: ./logs/2024_05_06-19_27_06-model_RN50_fusion4-lr_0.0001-b_128-j_8-p_amp/checkpoints
+2024-05-06,19:27:10 | INFO |   clip_model: PMC_CLIP
+2024-05-06,19:27:10 | INFO |   context_length: 77
+2024-05-06,19:27:10 | INFO |   crop_scale: 0.5
+2024-05-06,19:27:10 | INFO |   csv_caption_key: caption
+2024-05-06,19:27:10 | INFO |   csv_img_key: image
+2024-05-06,19:27:10 | INFO |   csv_separator: ,
+2024-05-06,19:27:10 | INFO |   dataset_resampled: False
+2024-05-06,19:27:10 | INFO |   dataset_type: jsonl
+2024-05-06,19:27:10 | INFO |   ddp_static_graph: False
+2024-05-06,19:27:10 | INFO |   debug: False
+2024-05-06,19:27:10 | INFO |   device: cuda:0
+2024-05-06,19:27:10 | INFO |   device_gpu: None
+2024-05-06,19:27:10 | INFO |   dist_backend: nccl
+2024-05-06,19:27:10 | INFO |   dist_url: env://
+2024-05-06,19:27:10 | INFO |   distributed: False
+2024-05-06,19:27:10 | INFO |   epochs: 100
+2024-05-06,19:27:10 | INFO |   eps: 1e-08
+2024-05-06,19:27:10 | INFO |   force_quick_gelu: False
+2024-05-06,19:27:10 | INFO |   freeze_bert: None
+2024-05-06,19:27:10 | INFO |   gather_with_grad: False
+2024-05-06,19:27:10 | INFO |   grad_checkpointing: False
+2024-05-06,19:27:10 | INFO |   horovod: False
+2024-05-06,19:27:10 | INFO |   hugging_face: True
+2024-05-06,19:27:10 | INFO |   image_dir: /home/keshsajengpt/QLIP/data/caption_T060_filtered_top4_sep_v0_subfigures
+2024-05-06,19:27:10 | INFO |   imagenet_v2: None
+2024-05-06,19:27:10 | INFO |   imagenet_val: None
+2024-05-06,19:27:10 | INFO |   local_loss: False
+2024-05-06,19:27:10 | INFO |   local_rank: 0
+2024-05-06,19:27:10 | INFO |   lock_image: False
+2024-05-06,19:27:10 | INFO |   lock_image_freeze_bn_stats: False
+2024-05-06,19:27:10 | INFO |   lock_image_unlocked_groups: 0
+2024-05-06,19:27:10 | INFO |   log_level: 20
+2024-05-06,19:27:10 | INFO |   log_local: False
+2024-05-06,19:27:10 | INFO |   log_path: ./logs/2024_05_06-19_27_06-model_RN50_fusion4-lr_0.0001-b_128-j_8-p_amp/out.log
+2024-05-06,19:27:10 | INFO |   logs: ./logs/
+2024-05-06,19:27:10 | INFO |   loss_weight: 0
+2024-05-06,19:27:10 | INFO |   lr: 0.0001
+2024-05-06,19:27:10 | INFO |   mask_ratio: 0.15
+2024-05-06,19:27:10 | INFO |   mim: False
+2024-05-06,19:27:10 | INFO |   mlm: True
+2024-05-06,19:27:10 | INFO |   model: RN50_fusion4
+2024-05-06,19:27:10 | INFO |   name: 2024_05_06-19_27_06-model_RN50_fusion4-lr_0.0001-b_128-j_8-p_amp
+2024-05-06,19:27:10 | INFO |   no_set_device_rank: False
+2024-05-06,19:27:10 | INFO |   precision: amp
+2024-05-06,19:27:10 | INFO |   pretrained: 
+2024-05-06,19:27:10 | INFO |   pretrained_image: False
+2024-05-06,19:27:10 | INFO |   rank: 0
+2024-05-06,19:27:10 | INFO |   report_to: tensorboard
+2024-05-06,19:27:10 | INFO |   resume: None
+2024-05-06,19:27:10 | INFO |   resume_model_only: False
+2024-05-06,19:27:10 | INFO |   save_frequency: 5
+2024-05-06,19:27:10 | INFO |   save_most_recent: False
+2024-05-06,19:27:10 | INFO |   scheduler: cosine
+2024-05-06,19:27:10 | INFO |   seed: 0
+2024-05-06,19:27:10 | INFO |   skip_scheduler: False
+2024-05-06,19:27:10 | INFO |   tensorboard: True
+2024-05-06,19:27:10 | INFO |   tensorboard_path: ./logs/2024_05_06-19_27_06-model_RN50_fusion4-lr_0.0001-b_128-j_8-p_amp/tensorboard
+2024-05-06,19:27:10 | INFO |   test_2000: False
+2024-05-06,19:27:10 | INFO |   torchscript: False
+2024-05-06,19:27:10 | INFO |   trace: False
+2024-05-06,19:27:10 | INFO |   train_data: /home/keshsajengpt/QLIP/data/train.jsonl
+2024-05-06,19:27:10 | INFO |   train_num_samples: None
+2024-05-06,19:27:10 | INFO |   use_bn_sync: False
+2024-05-06,19:27:10 | INFO |   val_data: /home/keshsajengpt/QLIP/data/valid.jsonl
+2024-05-06,19:27:10 | INFO |   val_frequency: 1
+2024-05-06,19:27:10 | INFO |   val_num_samples: None
+2024-05-06,19:27:10 | INFO |   wandb: False
+2024-05-06,19:27:10 | INFO |   wandb_notes: 
+2024-05-06,19:27:10 | INFO |   warmup: 500
+2024-05-06,19:27:10 | INFO |   wd: 0.1
+2024-05-06,19:27:10 | INFO |   workers: 8
+2024-05-06,19:27:10 | INFO |   world_size: 1
+2024-05-06,19:27:10 | INFO |   zeroshot_frequency: 0
+2024-05-06,19:27:22 | INFO | Start epoch 0
+2024-05-06,19:27:33 | INFO | Train Epoch: 0 [    128/1317219 (0%)] Total Loss: 7.8542 (7.854) Match Loss: 4.8759 (4.876) MLM Loss: 10.833 (10.83) Data (t): 3.738 Batch (t): 11.236 LR: 0.000000 Logit Scale: 14.286
+2024-05-06,19:29:50 | INFO | Train Epoch: 0 [  12928/1317219 (1%)] Total Loss: 5.3691 (6.612) Match Loss: 4.8576 (4.867) MLM Loss: 5.8807 (8.357) Data (t): 0.000 Batch (t): 1.373 LR: 0.000020 Logit Scale: 14.276
+2024-05-06,19:32:08 | INFO | Train Epoch: 0 [  25728/1317219 (2%)] Total Loss: 4.7604 (5.995) Match Loss: 4.8523 (4.862) MLM Loss: 4.6686 (7.127) Data (t): 0.000 Batch (t): 1.372 LR: 0.000040 Logit Scale: 14.262
+2024-05-06,19:34:24 | INFO | Train Epoch: 0 [  38528/1317219 (3%)] Total Loss: 4.5588 (5.636) Match Loss: 4.8549 (4.860) MLM Loss: 4.2627 (6.411) Data (t): 0.000 Batch (t): 1.361 LR: 0.000060 Logit Scale: 14.250
+2024-05-06,19:36:40 | INFO | Train Epoch: 0 [  51328/1317219 (4%)] Total Loss: 4.2581 (5.360) Match Loss: 4.8526 (4.859) MLM Loss: 3.6635 (5.862) Data (t): 0.000 Batch (t): 1.361 LR: 0.000080 Logit Scale: 14.239
+2024-05-06,19:38:56 | INFO | Train Epoch: 0 [  64128/1317219 (5%)] Total Loss: 4.0809 (5.147) Match Loss: 4.8539 (4.858) MLM Loss: 3.3078 (5.436) Data (t): 0.000 Batch (t): 1.363 LR: 0.000100 Logit Scale: 14.230
+2024-05-06,19:41:13 | INFO | Train Epoch: 0 [  76928/1317219 (6%)] Total Loss: 4.1343 (5.002) Match Loss: 4.8521 (4.857) MLM Loss: 3.4165 (5.147) Data (t): 0.000 Batch (t): 1.365 LR: 0.000100 Logit Scale: 14.224
+2024-05-06,19:43:29 | INFO | Train Epoch: 0 [  89728/1317219 (7%)] Total Loss: 3.9554 (4.871) Match Loss: 4.8514 (4.856) MLM Loss: 3.0594 (4.886) Data (t): 0.000 Batch (t): 1.359 LR: 0.000100 Logit Scale: 14.218
+2024-05-06,19:45:46 | INFO | Train Epoch: 0 [ 102528/1317219 (8%)] Total Loss: 3.9586 (4.770) Match Loss: 4.8517 (4.856) MLM Loss: 3.0655 (4.684) Data (t): 0.000 Batch (t): 1.370 LR: 0.000100 Logit Scale: 14.218
+2024-05-06,19:48:03 | INFO | Train Epoch: 0 [ 115328/1317219 (9%)] Total Loss: 3.8423 (4.677) Match Loss: 4.8539 (4.856) MLM Loss: 2.8306 (4.499) Data (t): 0.000 Batch (t): 1.371 LR: 0.000100 Logit Scale: 14.211
+2024-05-06,19:50:20 | INFO | Train Epoch: 0 [ 128128/1317219 (10%)] Total Loss: 3.8635 (4.603) Match Loss: 4.8506 (4.855) MLM Loss: 2.8765 (4.351) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 14.208
+2024-05-06,19:52:38 | INFO | Train Epoch: 0 [ 140928/1317219 (11%)] Total Loss: 3.8657 (4.542) Match Loss: 4.8534 (4.855) MLM Loss: 2.8781 (4.229) Data (t): 0.000 Batch (t): 1.375 LR: 0.000100 Logit Scale: 14.201
+2024-05-06,19:54:56 | INFO | Train Epoch: 0 [ 153728/1317219 (12%)] Total Loss: 3.7137 (4.478) Match Loss: 4.8534 (4.855) MLM Loss: 2.5740 (4.101) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 14.196
+2024-05-06,19:57:14 | INFO | Train Epoch: 0 [ 166528/1317219 (13%)] Total Loss: 3.7648 (4.427) Match Loss: 4.8521 (4.855) MLM Loss: 2.6775 (4.000) Data (t): 0.000 Batch (t): 1.378 LR: 0.000100 Logit Scale: 14.195
+2024-05-06,19:59:31 | INFO | Train Epoch: 0 [ 179328/1317219 (14%)] Total Loss: 3.9215 (4.393) Match Loss: 4.8521 (4.855) MLM Loss: 2.9909 (3.932) Data (t): 0.000 Batch (t): 1.372 LR: 0.000100 Logit Scale: 14.190
+2024-05-06,20:01:48 | INFO | Train Epoch: 0 [ 192128/1317219 (15%)] Total Loss: 3.7303 (4.352) Match Loss: 4.8520 (4.854) MLM Loss: 2.6086 (3.850) Data (t): 0.000 Batch (t): 1.373 LR: 0.000100 Logit Scale: 14.188
+2024-05-06,20:04:06 | INFO | Train Epoch: 0 [ 204928/1317219 (16%)] Total Loss: 3.7084 (4.314) Match Loss: 4.8526 (4.854) MLM Loss: 2.5642 (3.774) Data (t): 0.000 Batch (t): 1.375 LR: 0.000100 Logit Scale: 14.180
+2024-05-06,20:06:23 | INFO | Train Epoch: 0 [ 217728/1317219 (17%)] Total Loss: 3.6750 (4.279) Match Loss: 4.8515 (4.854) MLM Loss: 2.4985 (3.703) Data (t): 0.000 Batch (t): 1.376 LR: 0.000100 Logit Scale: 14.182
+2024-05-06,20:08:40 | INFO | Train Epoch: 0 [ 230528/1317219 (18%)] Total Loss: 3.5199 (4.239) Match Loss: 4.8519 (4.854) MLM Loss: 2.1879 (3.623) Data (t): 0.000 Batch (t): 1.370 LR: 0.000100 Logit Scale: 14.187
+2024-05-06,20:10:58 | INFO | Train Epoch: 0 [ 243328/1317219 (18%)] Total Loss: 3.5981 (4.207) Match Loss: 4.8503 (4.854) MLM Loss: 2.3458 (3.559) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 14.189
+2024-05-06,20:13:16 | INFO | Train Epoch: 0 [ 256128/1317219 (19%)] Total Loss: 3.6645 (4.181) Match Loss: 4.8537 (4.854) MLM Loss: 2.4753 (3.508) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 14.193
+2024-05-06,20:15:33 | INFO | Train Epoch: 0 [ 268928/1317219 (20%)] Total Loss: 3.5910 (4.154) Match Loss: 4.8521 (4.854) MLM Loss: 2.3298 (3.454) Data (t): 0.000 Batch (t): 1.372 LR: 0.000100 Logit Scale: 14.202
+2024-05-06,20:17:51 | INFO | Train Epoch: 0 [ 281728/1317219 (21%)] Total Loss: 3.6254 (4.131) Match Loss: 4.8523 (4.854) MLM Loss: 2.3985 (3.408) Data (t): 0.000 Batch (t): 1.382 LR: 0.000100 Logit Scale: 14.214
+2024-05-06,20:20:09 | INFO | Train Epoch: 0 [ 294528/1317219 (22%)] Total Loss: 3.6831 (4.112) Match Loss: 4.8529 (4.854) MLM Loss: 2.5133 (3.371) Data (t): 0.000 Batch (t): 1.378 LR: 0.000100 Logit Scale: 14.140
+2024-05-06,20:22:27 | INFO | Train Epoch: 0 [ 307328/1317219 (23%)] Total Loss: 3.7753 (4.099) Match Loss: 4.8542 (4.854) MLM Loss: 2.6965 (3.344) Data (t): 0.000 Batch (t): 1.378 LR: 0.000100 Logit Scale: 14.066
+2024-05-06,20:24:43 | INFO | Train Epoch: 0 [ 320128/1317219 (24%)] Total Loss: 3.7843 (4.087) Match Loss: 4.8529 (4.854) MLM Loss: 2.7157 (3.320) Data (t): 0.000 Batch (t): 1.369 LR: 0.000100 Logit Scale: 14.056
+2024-05-06,20:27:01 | INFO | Train Epoch: 0 [ 332928/1317219 (25%)] Total Loss: 3.6588 (4.071) Match Loss: 4.8519 (4.854) MLM Loss: 2.4657 (3.288) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 14.057
+2024-05-06,20:29:20 | INFO | Train Epoch: 0 [ 345728/1317219 (26%)] Total Loss: 3.5067 (4.051) Match Loss: 4.8523 (4.854) MLM Loss: 2.1612 (3.248) Data (t): 0.000 Batch (t): 1.385 LR: 0.000100 Logit Scale: 14.059
+2024-05-06,20:31:38 | INFO | Train Epoch: 0 [ 358528/1317219 (27%)] Total Loss: 3.5389 (4.033) Match Loss: 4.8532 (4.854) MLM Loss: 2.2247 (3.213) Data (t): 0.000 Batch (t): 1.382 LR: 0.000100 Logit Scale: 14.060
+2024-05-06,20:33:55 | INFO | Train Epoch: 0 [ 371328/1317219 (28%)] Total Loss: 3.6485 (4.020) Match Loss: 4.8510 (4.853) MLM Loss: 2.4460 (3.187) Data (t): 0.000 Batch (t): 1.375 LR: 0.000100 Logit Scale: 14.062
+2024-05-06,20:36:13 | INFO | Train Epoch: 0 [ 384128/1317219 (29%)] Total Loss: 3.6400 (4.008) Match Loss: 4.8528 (4.853) MLM Loss: 2.4273 (3.163) Data (t): 0.000 Batch (t): 1.373 LR: 0.000100 Logit Scale: 14.066
+2024-05-06,20:38:30 | INFO | Train Epoch: 0 [ 396928/1317219 (30%)] Total Loss: 3.4502 (3.991) Match Loss: 4.8531 (4.853) MLM Loss: 2.0472 (3.128) Data (t): 0.000 Batch (t): 1.373 LR: 0.000100 Logit Scale: 14.071
+2024-05-06,20:40:47 | INFO | Train Epoch: 0 [ 409728/1317219 (31%)] Total Loss: 3.5567 (3.977) Match Loss: 4.8526 (4.853) MLM Loss: 2.2607 (3.102) Data (t): 0.000 Batch (t): 1.371 LR: 0.000100 Logit Scale: 14.076
+2024-05-06,20:43:05 | INFO | Train Epoch: 0 [ 422528/1317219 (32%)] Total Loss: 3.4718 (3.963) Match Loss: 4.8526 (4.853) MLM Loss: 2.0909 (3.072) Data (t): 0.000 Batch (t): 1.378 LR: 0.000100 Logit Scale: 14.081
+2024-05-06,20:45:23 | INFO | Train Epoch: 0 [ 435328/1317219 (33%)] Total Loss: 3.5619 (3.951) Match Loss: 4.8525 (4.853) MLM Loss: 2.2713 (3.049) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 14.087
+2024-05-06,20:47:42 | INFO | Train Epoch: 0 [ 448128/1317219 (34%)] Total Loss: 3.5764 (3.941) Match Loss: 4.8528 (4.853) MLM Loss: 2.2999 (3.028) Data (t): 0.000 Batch (t): 1.392 LR: 0.000100 Logit Scale: 14.095
+2024-05-06,20:50:08 | INFO | Train Epoch: 0 [ 460928/1317219 (35%)] Total Loss: 3.5549 (3.930) Match Loss: 4.8533 (4.853) MLM Loss: 2.2566 (3.007) Data (t): 0.001 Batch (t): 1.458 LR: 0.000100 Logit Scale: 14.103
+2024-05-06,20:52:38 | INFO | Train Epoch: 0 [ 473728/1317219 (36%)] Total Loss: 3.5666 (3.921) Match Loss: 4.8519 (4.853) MLM Loss: 2.2812 (2.988) Data (t): 0.001 Batch (t): 1.503 LR: 0.000100 Logit Scale: 14.107
+2024-05-06,20:54:59 | INFO | Train Epoch: 0 [ 486528/1317219 (37%)] Total Loss: 3.5129 (3.910) Match Loss: 4.8519 (4.853) MLM Loss: 2.1738 (2.967) Data (t): 0.001 Batch (t): 1.410 LR: 0.000100 Logit Scale: 14.114
+2024-05-06,20:57:19 | INFO | Train Epoch: 0 [ 499328/1317219 (38%)] Total Loss: 3.5002 (3.900) Match Loss: 4.8520 (4.853) MLM Loss: 2.1484 (2.947) Data (t): 0.000 Batch (t): 1.397 LR: 0.000100 Logit Scale: 14.119
+2024-05-06,20:59:39 | INFO | Train Epoch: 0 [ 512128/1317219 (39%)] Total Loss: 3.4983 (3.890) Match Loss: 4.8519 (4.853) MLM Loss: 2.1447 (2.927) Data (t): 0.000 Batch (t): 1.400 LR: 0.000100 Logit Scale: 14.128
+2024-05-06,21:01:57 | INFO | Train Epoch: 0 [ 524928/1317219 (40%)] Total Loss: 3.5334 (3.882) Match Loss: 4.8521 (4.853) MLM Loss: 2.2148 (2.910) Data (t): 0.000 Batch (t): 1.381 LR: 0.000100 Logit Scale: 14.135
+2024-05-06,21:04:15 | INFO | Train Epoch: 0 [ 537728/1317219 (41%)] Total Loss: 3.5994 (3.875) Match Loss: 4.8515 (4.853) MLM Loss: 2.3473 (2.897) Data (t): 0.000 Batch (t): 1.385 LR: 0.000100 Logit Scale: 14.143
+2024-05-06,21:06:32 | INFO | Train Epoch: 0 [ 550528/1317219 (42%)] Total Loss: 3.4973 (3.867) Match Loss: 4.8520 (4.853) MLM Loss: 2.1427 (2.880) Data (t): 0.000 Batch (t): 1.371 LR: 0.000100 Logit Scale: 14.151
+2024-05-06,21:08:50 | INFO | Train Epoch: 0 [ 563328/1317219 (43%)] Total Loss: 3.4159 (3.857) Match Loss: 4.8517 (4.853) MLM Loss: 1.9801 (2.860) Data (t): 0.000 Batch (t): 1.376 LR: 0.000100 Logit Scale: 14.159
+2024-05-06,21:11:07 | INFO | Train Epoch: 0 [ 576128/1317219 (44%)] Total Loss: 3.5990 (3.851) Match Loss: 4.8545 (4.853) MLM Loss: 2.3435 (2.849) Data (t): 0.000 Batch (t): 1.375 LR: 0.000100 Logit Scale: 14.166
+2024-05-06,21:13:25 | INFO | Train Epoch: 0 [ 588928/1317219 (45%)] Total Loss: 3.4822 (3.843) Match Loss: 4.8513 (4.853) MLM Loss: 2.1132 (2.833) Data (t): 0.000 Batch (t): 1.374 LR: 0.000100 Logit Scale: 14.169
+2024-05-06,21:15:43 | INFO | Train Epoch: 0 [ 601728/1317219 (46%)] Total Loss: 3.5241 (3.836) Match Loss: 4.8522 (4.853) MLM Loss: 2.1960 (2.820) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 14.182
+2024-05-06,21:18:00 | INFO | Train Epoch: 0 [ 614528/1317219 (47%)] Total Loss: 3.5160 (3.830) Match Loss: 4.8521 (4.853) MLM Loss: 2.1800 (2.807) Data (t): 0.000 Batch (t): 1.378 LR: 0.000100 Logit Scale: 14.190
+2024-05-06,21:20:19 | INFO | Train Epoch: 0 [ 627328/1317219 (48%)] Total Loss: 3.5154 (3.824) Match Loss: 4.8522 (4.853) MLM Loss: 2.1786 (2.794) Data (t): 0.000 Batch (t): 1.382 LR: 0.000100 Logit Scale: 14.198
+2024-05-06,21:22:36 | INFO | Train Epoch: 0 [ 640128/1317219 (49%)] Total Loss: 3.4328 (3.816) Match Loss: 4.8519 (4.853) MLM Loss: 2.0137 (2.779) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 14.214
+2024-05-06,21:24:54 | INFO | Train Epoch: 0 [ 652928/1317219 (50%)] Total Loss: 3.5348 (3.811) Match Loss: 4.8522 (4.853) MLM Loss: 2.2174 (2.768) Data (t): 0.000 Batch (t): 1.376 LR: 0.000100 Logit Scale: 14.230
+2024-05-06,21:27:12 | INFO | Train Epoch: 0 [ 665728/1317219 (51%)] Total Loss: 3.4903 (3.805) Match Loss: 4.8524 (4.853) MLM Loss: 2.1282 (2.756) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 14.238
+2024-05-06,21:29:31 | INFO | Train Epoch: 0 [ 678528/1317219 (52%)] Total Loss: 3.4494 (3.798) Match Loss: 4.8517 (4.853) MLM Loss: 2.0471 (2.743) Data (t): 0.000 Batch (t): 1.394 LR: 0.000100 Logit Scale: 14.260
+2024-05-06,21:31:49 | INFO | Train Epoch: 0 [ 691328/1317219 (52%)] Total Loss: 3.5067 (3.793) Match Loss: 4.8517 (4.853) MLM Loss: 2.1617 (2.732) Data (t): 0.000 Batch (t): 1.380 LR: 0.000100 Logit Scale: 14.281
+2024-05-06,21:34:07 | INFO | Train Epoch: 0 [ 704128/1317219 (53%)] Total Loss: 3.4208 (3.786) Match Loss: 4.8520 (4.853) MLM Loss: 1.9897 (2.719) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 14.307
+2024-05-06,21:36:25 | INFO | Train Epoch: 0 [ 716928/1317219 (54%)] Total Loss: 3.4760 (3.781) Match Loss: 4.8517 (4.853) MLM Loss: 2.1002 (2.708) Data (t): 0.000 Batch (t): 1.376 LR: 0.000100 Logit Scale: 14.330
+2024-05-06,21:38:42 | INFO | Train Epoch: 0 [ 729728/1317219 (55%)] Total Loss: 3.5186 (3.776) Match Loss: 4.8521 (4.853) MLM Loss: 2.1851 (2.699) Data (t): 0.000 Batch (t): 1.375 LR: 0.000100 Logit Scale: 14.347
+2024-05-06,21:41:00 | INFO | Train Epoch: 0 [ 742528/1317219 (56%)] Total Loss: 3.4773 (3.771) Match Loss: 4.8526 (4.853) MLM Loss: 2.1020 (2.689) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 14.373
+2024-05-06,21:43:18 | INFO | Train Epoch: 0 [ 755328/1317219 (57%)] Total Loss: 3.3962 (3.765) Match Loss: 4.8516 (4.853) MLM Loss: 1.9408 (2.677) Data (t): 0.000 Batch (t): 1.381 LR: 0.000100 Logit Scale: 14.397
+2024-05-06,21:45:36 | INFO | Train Epoch: 0 [ 768128/1317219 (58%)] Total Loss: 3.5606 (3.761) Match Loss: 4.8516 (4.853) MLM Loss: 2.2695 (2.670) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 14.418
+2024-05-06,21:47:54 | INFO | Train Epoch: 0 [ 780928/1317219 (59%)] Total Loss: 3.4942 (3.757) Match Loss: 4.8526 (4.853) MLM Loss: 2.1358 (2.661) Data (t): 0.000 Batch (t): 1.378 LR: 0.000100 Logit Scale: 14.445
+2024-05-06,21:50:12 | INFO | Train Epoch: 0 [ 793728/1317219 (60%)] Total Loss: 3.3446 (3.751) Match Loss: 4.8520 (4.853) MLM Loss: 1.8373 (2.648) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 14.464
+2024-05-06,21:52:30 | INFO | Train Epoch: 0 [ 806528/1317219 (61%)] Total Loss: 3.5148 (3.747) Match Loss: 4.8521 (4.853) MLM Loss: 2.1774 (2.641) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 14.485
+2024-05-06,21:54:47 | INFO | Train Epoch: 0 [ 819328/1317219 (62%)] Total Loss: 3.3990 (3.742) Match Loss: 4.8517 (4.853) MLM Loss: 1.9463 (2.630) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 14.514
+2024-05-06,21:57:05 | INFO | Train Epoch: 0 [ 832128/1317219 (63%)] Total Loss: 3.3931 (3.736) Match Loss: 4.8519 (4.853) MLM Loss: 1.9343 (2.620) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 14.538
+2024-05-06,21:59:23 | INFO | Train Epoch: 0 [ 844928/1317219 (64%)] Total Loss: 3.4320 (3.732) Match Loss: 4.8514 (4.853) MLM Loss: 2.0127 (2.611) Data (t): 0.000 Batch (t): 1.382 LR: 0.000100 Logit Scale: 14.572
+2024-05-06,22:01:41 | INFO | Train Epoch: 0 [ 857728/1317219 (65%)] Total Loss: 3.3820 (3.727) Match Loss: 4.8527 (4.853) MLM Loss: 1.9113 (2.600) Data (t): 0.000 Batch (t): 1.381 LR: 0.000100 Logit Scale: 14.603
+2024-05-06,22:04:00 | INFO | Train Epoch: 0 [ 870528/1317219 (66%)] Total Loss: 3.4433 (3.722) Match Loss: 4.8527 (4.853) MLM Loss: 2.0339 (2.592) Data (t): 0.000 Batch (t): 1.382 LR: 0.000100 Logit Scale: 14.635
+2024-05-06,22:06:18 | INFO | Train Epoch: 0 [ 883328/1317219 (67%)] Total Loss: 3.4733 (3.719) Match Loss: 4.8531 (4.853) MLM Loss: 2.0935 (2.585) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 14.671
+2024-05-06,22:08:35 | INFO | Train Epoch: 0 [ 896128/1317219 (68%)] Total Loss: 3.4334 (3.715) Match Loss: 4.8523 (4.853) MLM Loss: 2.0145 (2.577) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 14.712
+2024-05-06,22:10:53 | INFO | Train Epoch: 0 [ 908928/1317219 (69%)] Total Loss: 3.3556 (3.710) Match Loss: 4.8524 (4.853) MLM Loss: 1.8589 (2.567) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 14.733
+2024-05-06,22:13:11 | INFO | Train Epoch: 0 [ 921728/1317219 (70%)] Total Loss: 3.3665 (3.705) Match Loss: 4.8513 (4.853) MLM Loss: 1.8817 (2.558) Data (t): 0.000 Batch (t): 1.383 LR: 0.000100 Logit Scale: 14.779
+2024-05-06,22:15:30 | INFO | Train Epoch: 0 [ 934528/1317219 (71%)] Total Loss: 3.5320 (3.703) Match Loss: 4.8525 (4.853) MLM Loss: 2.2115 (2.553) Data (t): 0.000 Batch (t): 1.382 LR: 0.000100 Logit Scale: 14.819
+2024-05-06,22:17:48 | INFO | Train Epoch: 0 [ 947328/1317219 (72%)] Total Loss: 3.4764 (3.700) Match Loss: 4.8513 (4.853) MLM Loss: 2.1014 (2.547) Data (t): 0.000 Batch (t): 1.380 LR: 0.000100 Logit Scale: 14.884
+2024-05-06,22:20:06 | INFO | Train Epoch: 0 [ 960128/1317219 (73%)] Total Loss: 3.3453 (3.695) Match Loss: 4.8523 (4.853) MLM Loss: 1.8383 (2.538) Data (t): 0.000 Batch (t): 1.382 LR: 0.000100 Logit Scale: 14.931
+2024-05-06,22:22:24 | INFO | Train Epoch: 0 [ 972928/1317219 (74%)] Total Loss: 3.4827 (3.692) Match Loss: 4.8522 (4.853) MLM Loss: 2.1132 (2.532) Data (t): 0.000 Batch (t): 1.381 LR: 0.000100 Logit Scale: 14.971
+2024-05-06,22:24:42 | INFO | Train Epoch: 0 [ 985728/1317219 (75%)] Total Loss: 3.3409 (3.688) Match Loss: 4.8522 (4.853) MLM Loss: 1.8297 (2.523) Data (t): 0.000 Batch (t): 1.375 LR: 0.000100 Logit Scale: 15.001
+2024-05-06,22:26:59 | INFO | Train Epoch: 0 [ 998528/1317219 (76%)] Total Loss: 3.4338 (3.685) Match Loss: 4.8519 (4.853) MLM Loss: 2.0158 (2.517) Data (t): 0.000 Batch (t): 1.373 LR: 0.000100 Logit Scale: 15.060
+2024-05-06,22:29:17 | INFO | Train Epoch: 0 [1011328/1317219 (77%)] Total Loss: 3.3597 (3.681) Match Loss: 4.8524 (4.853) MLM Loss: 1.8670 (2.509) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 15.125
+2024-05-06,22:31:35 | INFO | Train Epoch: 0 [1024128/1317219 (78%)] Total Loss: 4.4386 (3.690) Match Loss: 5.5737 (4.862) MLM Loss: 3.3034 (2.518) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 15.166
+2024-05-06,22:33:52 | INFO | Train Epoch: 0 [1036928/1317219 (79%)] Total Loss: 3.3813 (3.686) Match Loss: 4.8524 (4.861) MLM Loss: 1.9102 (2.511) Data (t): 0.000 Batch (t): 1.372 LR: 0.000100 Logit Scale: 15.122
+2024-05-06,22:36:10 | INFO | Train Epoch: 0 [1049728/1317219 (80%)] Total Loss: 3.3407 (3.682) Match Loss: 4.8526 (4.861) MLM Loss: 1.8287 (2.503) Data (t): 0.000 Batch (t): 1.380 LR: 0.000100 Logit Scale: 15.126
+2024-05-06,22:38:27 | INFO | Train Epoch: 0 [1062528/1317219 (81%)] Total Loss: 3.3967 (3.679) Match Loss: 4.8524 (4.861) MLM Loss: 1.9410 (2.496) Data (t): 0.000 Batch (t): 1.376 LR: 0.000100 Logit Scale: 15.133
+2024-05-06,22:40:45 | INFO | Train Epoch: 0 [1075328/1317219 (82%)] Total Loss: 3.3890 (3.675) Match Loss: 4.8519 (4.861) MLM Loss: 1.9261 (2.489) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 15.143
+2024-05-06,22:43:03 | INFO | Train Epoch: 0 [1088128/1317219 (83%)] Total Loss: 3.4761 (3.673) Match Loss: 4.8525 (4.861) MLM Loss: 2.0997 (2.485) Data (t): 0.000 Batch (t): 1.376 LR: 0.000100 Logit Scale: 15.151
+2024-05-06,22:45:21 | INFO | Train Epoch: 0 [1100928/1317219 (84%)] Total Loss: 3.4245 (3.670) Match Loss: 4.8519 (4.861) MLM Loss: 1.9971 (2.479) Data (t): 0.000 Batch (t): 1.376 LR: 0.000100 Logit Scale: 15.158
+2024-05-06,22:47:38 | INFO | Train Epoch: 0 [1113728/1317219 (85%)] Total Loss: 3.5361 (3.669) Match Loss: 4.8525 (4.861) MLM Loss: 2.2198 (2.476) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 15.165
+2024-05-06,22:49:57 | INFO | Train Epoch: 0 [1126528/1317219 (86%)] Total Loss: 3.4254 (3.666) Match Loss: 4.8528 (4.861) MLM Loss: 1.9980 (2.471) Data (t): 0.000 Batch (t): 1.382 LR: 0.000100 Logit Scale: 15.172
+2024-05-06,22:52:14 | INFO | Train Epoch: 0 [1139328/1317219 (87%)] Total Loss: 3.4732 (3.664) Match Loss: 4.8508 (4.861) MLM Loss: 2.0956 (2.467) Data (t): 0.000 Batch (t): 1.375 LR: 0.000100 Logit Scale: 15.179
+2024-05-06,22:54:32 | INFO | Train Epoch: 0 [1152128/1317219 (87%)] Total Loss: 3.3750 (3.660) Match Loss: 4.8539 (4.861) MLM Loss: 1.8961 (2.460) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 15.190
+2024-05-06,22:56:50 | INFO | Train Epoch: 0 [1164928/1317219 (88%)] Total Loss: 3.3344 (3.657) Match Loss: 4.8520 (4.860) MLM Loss: 1.8168 (2.453) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 15.196
+2024-05-06,22:59:08 | INFO | Train Epoch: 0 [1177728/1317219 (89%)] Total Loss: 3.3639 (3.654) Match Loss: 4.8524 (4.860) MLM Loss: 1.8754 (2.447) Data (t): 0.000 Batch (t): 1.376 LR: 0.000100 Logit Scale: 15.209
+2024-05-06,23:01:25 | INFO | Train Epoch: 0 [1190528/1317219 (90%)] Total Loss: 3.3791 (3.651) Match Loss: 4.8534 (4.860) MLM Loss: 1.9048 (2.441) Data (t): 0.000 Batch (t): 1.379 LR: 0.000100 Logit Scale: 15.223
+2024-05-06,23:03:43 | INFO | Train Epoch: 0 [1203328/1317219 (91%)] Total Loss: 3.2968 (3.647) Match Loss: 4.8518 (4.860) MLM Loss: 1.7418 (2.434) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 15.235
+2024-05-06,23:06:01 | INFO | Train Epoch: 0 [1216128/1317219 (92%)] Total Loss: 3.2880 (3.643) Match Loss: 4.8519 (4.860) MLM Loss: 1.7240 (2.427) Data (t): 0.000 Batch (t): 1.377 LR: 0.000100 Logit Scale: 15.250
+2024-05-06,23:08:18 | INFO | Train Epoch: 0 [1228928/1317219 (93%)] Total Loss: 3.4346 (3.641) Match Loss: 4.8520 (4.860) MLM Loss: 2.0172 (2.422) Data (t): 0.000 Batch (t): 1.375 LR: 0.000100 Logit Scale: 15.259
+2024-05-06,23:10:36 | INFO | Train Epoch: 0 [1241728/1317219 (94%)] Total Loss: 3.3862 (3.639) Match Loss: 4.8536 (4.860) MLM Loss: 1.9189 (2.417) Data (t): 0.000 Batch (t): 1.376 LR: 0.000100 Logit Scale: 15.271
+2024-05-06,23:12:53 | INFO | Train Epoch: 0 [1254528/1317219 (95%)] Total Loss: 3.3727 (3.636) Match Loss: 4.8520 (4.860) MLM Loss: 1.8934 (2.412) Data (t): 0.000 Batch (t): 1.369 LR: 0.000100 Logit Scale: 15.289
+2024-05-06,23:15:09 | INFO | Train Epoch: 0 [1267328/1317219 (96%)] Total Loss: 3.3894 (3.633) Match Loss: 4.8527 (4.860) MLM Loss: 1.9261 (2.407) Data (t): 0.000 Batch (t): 1.365 LR: 0.000100 Logit Scale: 15.305
