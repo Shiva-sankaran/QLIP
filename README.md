@@ -1,4 +1,6 @@
-# PMC-CLIP
+# QCLIP
+
+This repository has been cloned from [PMC-CLIP](https://github.com/WeixiongLin/PMC-CLIP)
 
 The dataset and checkpoint is available at [Huggingface](https://huggingface.co/datasets/axiong/pmc-oa), [Baidu Cloud](https://pan.baidu.com/s/1mD51oOYbIOqDJSeiPNaCCg)(key: 3iqf).
 
