@@ -7,7 +7,14 @@
 
 ## General Description
 
-We train a quantum visual encoder equipped with 4 qubits. Our primary contribution is making the quantum visual encoder compatible with exisiting torch GPU and contrastive learning framework.
+We train a quantum visual encoder equipped with 4 qubits. Our primary contribution is making the quantum visual encoder compatible with exisiting torch GPU and contrastive learning framework. More information is in the QLIP section below.
+
+## NLP Concepts
+
+[1. Syntax]: We use pretrained biomedical tokenizer to tokenize the input text.
+[2. Semantics]: We learn visual and text embeddings to learn a unifed latent space for both modalities through contrastive learning.
+[3. Transformer LLMs]: We use pertrained transformer based text encoder to get text embeddings. The LLM was trained on biomedical dataset.
+[4. Applications]: We use image-text and text-image retrieval tasks to evaluate our model's performance
 
 # QCLIP
 
