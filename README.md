@@ -1,3 +1,14 @@
+# Submission Info
+
+## Team members
+1. Sajen Sarvajith Karthikeyan
+2. Siva Sathwik Kommi
+3. Shivasankaran Vanaja Pandi
+
+## General Description
+
+We train a quantum visual encoder equipped with 4 qubits. Our primary contribution is making the quantum visual encoder compatible with exisiting torch GPU and contrastive learning framework.
+
 # QCLIP
 
 This repository has been cloned from [PMC-CLIP](https://github.com/WeixiongLin/PMC-CLIP)
@@ -15,10 +26,7 @@ The dataset and checkpoint is available at [Huggingface](https://huggingface.co/
     - [2. Prepare Dataset](#2-prepare-dataset)
     - [3. Training](#3-training)
     - [4. Evaluation](#4-evaluation)
-  - [Acknowledgement](#acknowledgement)
-  - [Contribution](#contribution)
-  - [TODO](#todo)
-  - [Cite](#cite)
+
 
 ## Usage
 
@@ -50,7 +58,7 @@ conda activate qlip
 
 pip install -r requirements.txt
 # pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
-
+pip install pennylane
 python setup.py develop  # install qlip with dev mode
 ```
 
@@ -65,24 +73,15 @@ Or follow the [Pipeline of PMC-OA Development](https://github.com/WeixiongLin/Bu
 Single GPU
 ```bash
 python -m training.main \
---dataset-type "csv" --csv-separator "," --save-frequency 5 \
+--dataset-type "jsonl" --csv-separator "," --save-frequency 5 \
 --report-to tensorboard \
---train-data="path/to/train.csv" --val-data="path/to/valid.csv" \
+--train-data="path/to/train.jsonl" --val-data="path/to/valid.jsonl" \
 --csv-img-key image --csv-caption-key caption \
 --warmup 500 --batch-size=8 --lr=1e-4 --wd=0.1 --epochs=100 --workers=8 \
 --model RN50_fusion4 --hugging-face --mlm --crop-scale 0.5
 ```
 
-Multi GPU
-```bash
-CUDA_VISIBLE_DEVICES=0,1 torchrun --nproc_per_node=2 --rdzv_endpoint=$HOSTE_NODE_ADDR -m training.main \
---dataset-type "csv" --csv-separator "," --save-frequency 5 \
---report-to tensorboard \
---train-data="path/to/train.csv" --val-data="path/to/valid.csv" \
---csv-img-key image --csv-caption-key caption \
---warmup 500 --batch-size=128 --lr=1e-4 --wd=0.1 --epochs=100 --workers=8 \
---model RN50_fusion4 --hugging-face --mlm --crop-scale 0.5
-```
+The dataset and jsonl file should be downlaoded from [here](https://huggingface.co/datasets/axiong/pmc_oa/tree/main)
 
 <div class="third">
   <img src="docs/resources/match_loss.jpg" style="height:200px">
