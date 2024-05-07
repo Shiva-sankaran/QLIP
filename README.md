@@ -16,7 +16,11 @@ We train a quantum visual encoder equipped with 4 qubits. Our primary contributi
 [3. Transformer LLMs]: We use pertrained transformer based text encoder to get text embeddings. The LLM was trained on biomedical dataset.
 [4. Applications]: We use image-text and text-image retrieval tasks to evaluate our model's performance
 
-# QCLIP
+## System
+
+We train our model on a GCP instance running Ubuntu and equipped with a T4 GPU.
+
+# QLIP
 
 This repository has been cloned from [PMC-CLIP](https://github.com/WeixiongLin/PMC-CLIP)
 
